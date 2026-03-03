@@ -23,7 +23,7 @@ function getCurrentUser() {
     
     global $database;
     
-    $sql = "SELECT id, name, email, role, created_at FROM users WHERE id = ?";
+    $sql = "SELECT id, name, email, role, google_id, avatar, login_method, created_at FROM users WHERE id = ? AND deleted_at IS NULL";
     $user = $database->getSingle($sql, [$_SESSION['user_id']]);
     
     return $user ?: null;
@@ -46,12 +46,17 @@ function login($email, $password) {
     }
     
     // Get user by email
-    $sql = "SELECT id, name, email, password, role FROM users WHERE email = ?";
+    $sql = "SELECT id, name, email, password, role, login_method FROM users WHERE email = ? AND deleted_at IS NULL";
     $user = $database->getSingle($sql, [$email]);
     
     if (!$user) {
         incrementLoginAttempts();
         return ['success' => false, 'message' => 'Invalid email or password'];
+    }
+    
+    // Check if user registered with Google
+    if ($user['login_method'] === 'google' && empty($user['password'])) {
+        return ['success' => false, 'message' => 'This account uses Google login. Please use the Google Sign-In button.'];
     }
     
     // Verify password
@@ -126,7 +131,7 @@ function register($name, $email, $password, $role = 'student') {
     }
     
     // Check if email already exists
-    if ($database->exists("SELECT id FROM users WHERE email = ?", [$email])) {
+    if ($database->exists("SELECT id FROM users WHERE email = ? AND deleted_at IS NULL", [$email])) {
         return ['success' => false, 'message' => 'Email already registered'];
     }
     
@@ -134,7 +139,7 @@ function register($name, $email, $password, $role = 'student') {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT, ['cost' => HASH_COST]);
     
     // Insert user
-    $sql = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO users (name, email, password, role, login_method) VALUES (?, ?, ?, ?, 'email')";
     $user_id = $database->insert($sql, [$name, $email, $hashed_password, $role]);
     
     if (!$user_id) {
@@ -302,7 +307,7 @@ function canManageSlot($slot_id) {
 function getUserById($user_id) {
     global $database;
     
-    $sql = "SELECT id, name, email, role, created_at FROM users WHERE id = ?";
+    $sql = "SELECT id, name, email, role, google_id, avatar, login_method, created_at FROM users WHERE id = ? AND deleted_at IS NULL";
     return $database->getSingle($sql, [$user_id]);
 }
 
@@ -315,7 +320,7 @@ function getAllUsers($role = null, $page = 1, $search = '') {
     $offset = ($page - 1) * ITEMS_PER_PAGE;
     $params = [];
     
-    $sql = "SELECT id, name, email, role, created_at FROM users WHERE 1=1";
+    $sql = "SELECT id, name, email, role, login_method, created_at FROM users WHERE deleted_at IS NULL";
     
     if ($role) {
         $sql .= " AND role = ?";
@@ -342,7 +347,7 @@ function countUsers($role = null, $search = '') {
     global $database;
     
     $params = [];
-    $sql = "SELECT COUNT(*) as count FROM users WHERE 1=1";
+    $sql = "SELECT COUNT(*) as count FROM users WHERE deleted_at IS NULL";
     
     if ($role) {
         $sql .= " AND role = ?";
@@ -356,5 +361,25 @@ function countUsers($role = null, $search = '') {
     }
     
     return $database->count($sql, $params);
+}
+
+/**
+ * Get user by email
+ */
+function getUserByEmail($email) {
+    global $database;
+    
+    $sql = "SELECT id, name, email, role, google_id, avatar, login_method, created_at FROM users WHERE email = ? AND deleted_at IS NULL";
+    return $database->getSingle($sql, [$email]);
+}
+
+/**
+ * Get user by Google ID
+ */
+function getUserByGoogleId($googleId) {
+    global $database;
+    
+    $sql = "SELECT id, name, email, role, google_id, avatar, login_method, created_at FROM users WHERE google_id = ? AND deleted_at IS NULL";
+    return $database->getSingle($sql, [$googleId]);
 }
 ?>

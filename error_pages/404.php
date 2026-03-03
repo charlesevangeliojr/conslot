@@ -44,7 +44,7 @@ include __DIR__ . '/../includes/header.php';
                     <?php endif; ?>
                 <?php else: ?>
                     <li><a href="<?php echo APP_URL; ?>/auth/login.php">Login</a></li>
-                    <li><a href="<?php echo APP_URL; ?>/auth/register.php">Register</a></li>
+                    <li><a href="<?php echo APP_URL; ?>/auth/register.php">Consult Now</a></li>
                 <?php endif; ?>
                 <li><a href="<?php echo APP_URL; ?>/index.php">Home</a></li>
             </ul>

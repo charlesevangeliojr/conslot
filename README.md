@@ -63,7 +63,7 @@ conslot/
 │   └── my_bookings.php      # Booking history
 ├── auth/
 │   ├── login.php            # Login page
-│   ├── register.php         # Registration page
+│   ├── register.php         # Consultation registration page
 │   └── logout.php           # Logout handler
 ├── assets/
 │   └── images/              # Image assets
@@ -168,7 +168,7 @@ define('SLOT_DURATION', 30); // 30 minutes per slot
 5. Generate reports on consultation usage
 
 ### For Students
-1. Register for an account or log in
+1. Consult for an account or log in
 2. View available consultation slots
 3. Book appointments based on availability
 4. Manage upcoming bookings

@@ -128,7 +128,7 @@ if (!defined('APP_NAME')) {
                             </a>
                             <a href="<?php echo APP_URL; ?>/auth/register.php" class="nav-link">
                                 <i class="fas fa-user-plus"></i>
-                                <span>Register</span>
+                                <span>Consult Now</span>
                             </a>
                         </div>
                     <?php endif; ?>
