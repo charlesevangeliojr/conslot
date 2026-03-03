@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard · ConSlot</title>
+    <meta name="description" content="Manage your consultation bookings and view upcoming appointments">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2b6e3e;          /* deeper, more professional green */
+            --primary-light: #4c9a6b;
+            --primary-soft: #e8f3ed;
+            --primary-dark: #1b4b2b;
+            --secondary: #2c3e50;
+            --accent: #0d6efd;
+            --success: #198754;
+            --warning: #ffc107;
+            --danger: #bb2d3b;
+            --info: #0dcaf0;
+
+            --bg-body: #f4f7fb;
+            --bg-card: #ffffff;
+            --bg-soft: #f8fafd;
+            --border-light: #e9ecf0;
+            --border-main: #d8dee6;
+
+            --text-main: #1e2a3a;
+            --text-muted: #546e7a;
+            --text-light: #ffffff;
+
+            --shadow-card: 0 12px 30px rgba(0, 20, 10, 0.06), 0 4px 10px rgba(0, 20, 10, 0.03);
+            --shadow-hover: 0 20px 35px rgba(0, 40, 20, 0.12);
+
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+
+            --spacing: 1rem;
+            --spacing-lg: 1.8rem;
+            --transition: all 0.25s ease;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* container */
+        .dashboard-container {
+            max-width: 1440px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* header / nav simplified */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--border-light);
+            padding: 0.6rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+        .brand-link {
+            display: flex;
+            align-items: center;
+        }
+        .logo-img {
+            height: 40px;
+            width: auto;
+            filter: brightness(1.05);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .nav-link.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+        .nav-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* ----- tabs ----- */
+        .dashboard-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.6rem;
+            border-radius: 60px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 40px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .tab-btn i { font-size: 1.1rem; }
+        .tab-btn:hover {
+            background: var(--primary-soft);
+            color: var(--primary-dark);
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 10px 18px -8px rgba(43,110,62,0.5);
+        }
+
+        /* tab content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* welcome */
+        .welcome-section {
+            margin: 2rem 0 2.5rem;
+        }
+        .welcome-section h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #1e4b2e, #3b8b5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+        .welcome-section p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        /* stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: var(--shadow-card);
+            border: 1px solid white;
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            transform: scale(1.02) translateY(-3px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-hover);
+        }
+        .stat-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-soft);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        .stat-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+        .stat-info p {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* quick actions */
+        .quick-actions h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+        }
+        .action-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem 1.8rem;
+            box-shadow: var(--shadow-card);
+            border: 1px solid white;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .action-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-soft);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .action-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .action-card p {
+            color: var(--text-muted);
+        }
+
+        /* instructors slider + availability badges */
+        .instructor-section { background: white; border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow-card); }
+        .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        .slider-controls { display: flex; gap: 0.8rem; }
+        .slider-btn { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-soft); border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; transition: var(--transition); }
+        .slider-btn:hover { background: var(--primary); color: white; }
+        .instructor-slider { display: flex; gap: 1.8rem; overflow-x: auto; scroll-behavior: smooth; padding: 0.5rem 0.25rem 1.5rem; scrollbar-width: thin; }
+        .instructor-slider::-webkit-scrollbar { height: 8px; background: #eef2f7; border-radius: 20px; }
+        .instructor-slider::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 20px; }
+        .instructor-card {
+            min-width: 300px; background: var(--bg-soft); border-radius: var(--radius-lg); padding: 2rem 1.5rem;
+            border: 2px solid transparent; transition: var(--transition);
+        }
+        .instructor-card.selected { border-color: var(--primary); background: white; box-shadow: var(--shadow-hover); }
+        .instructor-avatar { width: 104px; height: 104px; background: var(--primary); border-radius: 50%; margin: 0 auto 1.2rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.8rem; }
+        .department { color: var(--primary); font-weight: 600; }
+        .specialization { color: var(--text-muted); font-size: 0.9rem; }
+        .availability-badge {
+            background: #e0f2e9; color: #1b4b2b; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.8rem;
+            display: inline-flex; align-items: center; gap: 6px; margin: 0.8rem 0 0.5rem; font-weight: 600;
+        }
+        .day-pill {
+            display: inline-block; background: white; border-radius: 20px; padding: 0.2rem 0.8rem;
+            font-size: 0.7rem; font-weight: 600; color: var(--text-main); border: 1px solid var(--border-light);
+            margin-right: 4px; margin-top: 6px;
+        }
+        .instructor-stats { display: flex; justify-content: center; gap: 1.5rem; font-size: 0.9rem; color: var(--text-muted); margin: 1rem 0; }
+        .select-btn { background: white; border: 1.5px solid var(--primary); color: var(--primary); font-weight: 600; padding: 0.8rem 1.8rem; border-radius: 40px; width: 100%; cursor: pointer; transition: var(--transition); }
+        .select-btn:hover { background: var(--primary); color: white; }
+        .select-btn.selected { background: var(--primary); color: white; }
+
+        /* ===== MODAL STYLES ===== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,20,10,0.5); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; opacity: 0; pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .modal-overlay.show {
+            opacity: 1; pointer-events: auto;
+        }
+        .modal-container {
+            background: white; border-radius: 32px; max-width: 500px; width: 90%;
+            box-shadow: 0 30px 60px rgba(0,40,20,0.3); padding: 2rem;
+            transform: scale(0.95); transition: transform 0.25s ease;
+        }
+        .modal-overlay.show .modal-container {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--bg-soft); padding-bottom: 1rem; margin-bottom: 1.5rem;
+        }
+        .modal-header h2 {
+            font-size: 1.8rem; color: var(--primary); display: flex; align-items: center; gap: 10px;
+        }
+        .modal-close {
+            background: var(--bg-soft); border: none; width: 40px; height: 40px;
+            border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .modal-close:hover { background: var(--danger); color: white; }
+        .modal-body {
+            margin-bottom: 2rem;
+        }
+        .slot-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.8rem; margin: 1.5rem 0;
+        }
+        .slot-item {
+            background: var(--bg-soft); border: 1.5px solid var(--border-light);
+            border-radius: 40px; padding: 0.8rem 0.5rem; text-align: center;
+            font-weight: 600; font-size: 0.9rem; cursor: pointer;
+            transition: var(--transition);
+        }
+        .slot-item:hover {
+            background: var(--primary); color: white; border-color: var(--primary);
+        }
+        .slot-item.selected-slot {
+            background: var(--primary); color: white; border-color: var(--primary-dark);
+            box-shadow: 0 6px 12px rgba(43,110,62,0.3);
+        }
+        .modal-footer {
+            display: flex; justify-content: flex-end; gap: 1rem;
+            border-top: 2px solid var(--bg-soft); padding-top: 1.5rem;
+        }
+        .btn-confirm {
+            background: var(--primary); color: white; border: none;
+            padding: 0.9rem 2.2rem; border-radius: 40px; font-weight: 600;
+            cursor: pointer; transition: var(--transition);
+        }
+        .btn-confirm:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-cancel {
+            background: transparent; border: 1.5px solid var(--border-light);
+            padding: 0.9rem 2.2rem; border-radius: 40px; font-weight: 600;
+            cursor: pointer; transition: var(--transition);
+        }
+        .btn-cancel:hover { background: var(--bg-soft); }
+
+        /* profile */
+        .profile-section {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-card);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--bg-soft);
+            margin-bottom: 2rem;
+        }
+        .profile-avatar-large {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            position: relative;
+        }
+        .avatar-edit {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border-light);
+            color: var(--text-main);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .avatar-edit:hover { background: var(--primary); color: white; }
+        .role-badge {
+            background: var(--primary-soft);
+            color: var(--primary);
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        .profile-form {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 1.8rem;
+        }
+        .full-width { grid-column: span 2; }
+        .form-group label { font-weight: 600; margin-bottom: 0.4rem; display: block; color: var(--text-main); }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 1.5px solid var(--border-light);
+            border-radius: 16px;
+            background: var(--bg-soft);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            background: white;
+            box-shadow: 0 5px 12px rgba(43,110,62,0.1);
+        }
+        .btn-primary, .btn-secondary {
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 14px rgba(43,110,62,0.3);
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-secondary {
+            background: var(--bg-soft);
+            color: var(--text-main);
+            border: 1.5px solid var(--border-light);
+        }
+        .btn-secondary:hover { background: #e6ecf5; }
+
+        /* history + calendar layout */
+        .history-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+        }
+        .history-list-section, .calendar-section {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            box-shadow: var(--shadow-card);
+        }
+        .history-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 1.5rem 0;
+        }
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid var(--border-light);
+            background: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* history item with note area */
+        .history-item { 
+            display: flex; 
+            flex-direction: column; 
+            background: var(--bg-soft); 
+            border-radius: 20px; 
+            border-left: 5px solid var(--primary); 
+            transition: var(--transition); 
+            padding: 0; 
+            overflow: hidden; 
+        }
+        .history-item.completed { border-left-color: var(--info); }
+        .history-item.cancelled { border-left-color: var(--danger); }
+        .history-item.pending { border-left-color: var(--warning); }
+        .history-main-row {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+        }
+        .history-icon {
+            width: 52px; height: 52px; border-radius: 18px;
+            background: var(--primary-soft);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary); font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .history-details { flex: 1; }
+        .history-details h4 { font-weight: 700; }
+        .history-details p { color: var(--text-muted); font-size: 0.9rem; }
+        .history-meta { text-align: right; min-width: 120px; }
+        .history-date { font-weight: 700; }
+        .history-time { color: var(--text-muted); font-size: 0.85rem; }
+        .status-badge {
+            font-size: 0.7rem; padding: 0.2rem 0.8rem; border-radius: 40px; font-weight: 600; display: inline-block;
+        }
+        .status-badge.confirmed { background: #dff0dd; color: #1d643b; }
+        .status-badge.completed { background: #d1e7ff; color: #0d4b8c; }
+        .status-badge.cancelled { background: #f8dddd; color: #a11f2c; }
+        .status-badge.pending { background: #fff3cd; color: #856404; }
+
+        /* NOTE section inside history item (hidden by default, visible when ongoing) */
+        .history-note-area {
+            background: rgba(255,255,245,0.7);
+            border-top: 1px dashed var(--border-main);
+            padding: 0.9rem 1.5rem 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .note-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .note-content {
+            background: white;
+            border-radius: 14px;
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            border: 1px solid var(--border-light);
+            word-break: break-word;
+        }
+        .note-content.empty {
+            color: #a0b3c2;
+            font-style: italic;
+        }
+        .note-actions {
+            display: flex;
+            gap: 0.7rem;
+            justify-content: flex-end;
+            margin-top: 0.3rem;
+        }
+        .note-btn {
+            background: transparent;
+            border: 1px solid var(--border-main);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .note-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        /* small note badge on main row if note exists */
+        .has-note-badge {
+            background: var(--primary-light);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            margin-left: 0.5rem;
+        }
+        /* ongoing indicator */
+        .ongoing-tag {
+            background: #ffc107;
+            color: #1e2a3a;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        /* calendar */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7,1fr);
+            gap: 6px;
+            margin-top: 1rem;
+        }
+        .calendar-day-header { font-weight: 600; text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 0.5rem 0; }
+        .calendar-day {
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-soft);
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        .calendar-day.other-month { color: #b6c4d2; background: #f1f4f9; }
+        .calendar-day.today { background: var(--primary-soft); color: var(--primary-dark); font-weight: 700; }
+        .calendar-day.has-event:after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 5px; height: 5px;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        .calendar-day.selected { background: var(--primary); color: white; }
+
+        /* footer */
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-light);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+        .footer-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            gap: 3rem;
+        }
+        .footer-brand { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        .footer-links { list-style: none; }
+        .footer-link { color: var(--text-muted); text-decoration: none; display: inline-block; margin: 0.4rem 0; }
+        .footer-link:hover { color: var(--primary); }
+        .footer-bottom { text-align: center; padding-top: 3rem; color: var(--text-muted); }
+
+        /* responsiveness */
+        @media (max-width: 900px) {
+            .history-layout { grid-template-columns: 1fr; }
+            .profile-form { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+        @media (max-width: 600px) {
+            .dashboard-container { padding: 0 1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <nav class="nav-container">
+        <div class="nav-brand">
+            <a href="dashboard.html" class="brand-link">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 50'%3E%3Ctext x='10' y='35' font-family='Arial' font-weight='700' font-size='28' fill='%232b6e3e'%3EConSlot%3C/text%3E%3C/svg%3E" alt="ConSlot" class="logo-img" style="height: 40px;">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link active" onclick="switchTab('overview'); return false;">Dashboard</a>
+            <a href="../index.html" class="nav-link">Logout</a>
+        </div>
+    </nav>
+</header>
+
+<div class="dashboard-container">
+    <!-- tabs -->
+    <div class="dashboard-tabs">
+        <button class="tab-btn active" onclick="switchTab('overview')"><i class="fas fa-home"></i><span>Overview</span></button>
+        <button class="tab-btn" onclick="switchTab('instructors')"><i class="fas fa-chalkboard-teacher"></i><span>Instructors</span></button>
+        <button class="tab-btn" onclick="switchTab('profile')"><i class="fas fa-user"></i><span>Profile</span></button>
+        <button class="tab-btn" onclick="switchTab('history')"><i class="fas fa-history"></i><span>History</span></button>
+        
+    </div>
+
+    <!-- overview -->
+    <div id="overview" class="tab-content active">
+        <div class="welcome-section">
+            <h1>Welcome back, Alex!</h1>
+            <p>Manage consultations, track progress, and connect with instructors.</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h3>3</h3><p>Upcoming</p></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-history"></i></div><div class="stat-info"><h3>12</h3><p>Total</p></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-user-clock"></i></div><div class="stat-info"><h3>1</h3><p>Pending</p></div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div><div class="stat-info"><h3>5</h3><p>Instructors</p></div></div>
+        </div>
+        <div class="quick-actions">
+            <h2>Quick actions</h2>
+            <div class="action-grid">
+                <div class="action-card" onclick="switchTab('instructors')"><div class="action-icon"><i class="fas fa-plus-circle"></i></div><h3>Book consultation</h3><p>Find an instructor and schedule a session</p></div>
+                <div class="action-card" onclick="switchTab('history')"><div class="action-icon"><i class="fas fa-list-alt"></i></div><h3>View history</h3><p>Past & upcoming appointments</p></div>
+                <div class="action-card" onclick="switchTab('profile')"><div class="action-icon"><i class="fas fa-user-edit"></i></div><h3>Edit profile</h3><p>Update your information</p></div>
+            </div>
+        </div>
+    
+        <!-- calendar with all history on overview -->
+        <div class="overview-calendar-section">
+            <div class="overview-calendar-header">
+                <h2><i class="fas fa-calendar-alt" style="color:var(--primary)"></i> Schedule Overview</h2>
+                <div>
+                    <button class="btn-secondary" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <span style="margin:0 1.5rem; font-weight:600;">March 2024</span>
+                    <button class="btn-secondary" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="overview-calendar-grid">
+                <!-- calendar grid -->
+                <div class="calendar-section" style="padding:1.5rem;">
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Su</div><div class="calendar-day-header">Mo</div><div class="calendar-day-header">Tu</div><div class="calendar-day-header">We</div><div class="calendar-day-header">Th</div><div class="calendar-day-header">Fr</div><div class="calendar-day-header">Sa</div>
+                        <div class="calendar-day other-month">25</div><div class="calendar-day other-month">26</div><div class="calendar-day other-month">27</div><div class="calendar-day other-month">28</div><div class="calendar-day other-month">29</div><div class="calendar-day">1</div><div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div><div class="calendar-day">4</div><div class="calendar-day has-event">5</div><div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div>
+                        <div class="calendar-day has-event">10</div><div class="calendar-day">11</div><div class="calendar-day">12</div><div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day has-event today">15</div><div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div><div class="calendar-day has-event">18</div><div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day">21</div><div class="calendar-day">22</div><div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div><div class="calendar-day">25</div><div class="calendar-day">26</div><div class="calendar-day">27</div><div class="calendar-day">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div>
+                        <div class="calendar-day">31</div><div class="calendar-day other-month">1</div><div class="calendar-day other-month">2</div><div class="calendar-day other-month">3</div><div class="calendar-day other-month">4</div><div class="calendar-day other-month">5</div><div class="calendar-day other-month">6</div>
+                    </div>
+                </div>
+                <!-- event list showing all history with topic and instructor -->
+                <div class="event-list-container">
+                    <h3 style="margin-bottom:1rem; color:var(--primary)"><i class="fas fa-list"></i> All Consultations</h3>
+                    <div id="overviewEventList">
+                        <div class="event-item confirmed">
+                            <div class="event-header">
+                                <div>
+                                    <div class="event-topic">Academic Advising</div>
+                                    <div class="event-instructor">Dr. Sarah Smith � Computer Science</div>
+                                </div>
+                                <span class="status-badge confirmed">Confirmed</span>
+                            </div>
+                            <div class="event-datetime"><i class="fas fa-calendar-day"></i> Mar 15, 2024 at 10:00 AM</div>
+                        </div>
+                        <div class="event-item completed">
+                            <div class="event-header">
+                                <div>
+                                    <div class="event-topic">Project Review</div>
+                                    <div class="event-instructor">Prof. Michael Brown � Engineering</div>
+                                </div>
+                                <span class="status-badge completed">Completed</span>
+                            </div>
+                            <div class="event-datetime"><i class="fas fa-calendar-check"></i> Mar 10, 2024 at 2:30 PM</div>
+                        </div>
+                        <div class="event-item pending">
+                            <div class="event-header">
+                                <div>
+                                    <div class="event-topic">Course Consultation</div>
+                                    <div class="event-instructor">Prof. John Johnson � Mathematics</div>
+                                </div>
+                                <span class="status-badge pending">Pending</span>
+                            </div>
+                            <div class="event-datetime"><i class="fas fa-clock"></i> Mar 18, 2024 at 2:00 PM</div>
+                        </div>
+                        <div class="event-item completed">
+                            <div class="event-header">
+                                <div>
+                                    <div class="event-topic">Research Discussion</div>
+                                    <div class="event-instructor">Dr. Emily Chen � Physics</div>
+                                </div>
+                                <span class="status-badge completed">Completed</span>
+                            </div>
+                            <div class="event-datetime"><i class="fas fa-check"></i> Mar 5, 2024 at 11:00 AM</div>
+                        </div>
+                        <div class="event-item cancelled">
+                            <div class="event-header">
+                                <div>
+                                    <div class="event-topic">Career Counseling</div>
+                                    <div class="event-instructor">Dr. Lisa Williams � Psychology</div>
+                                </div>
+                                <span class="status-badge cancelled">Cancelled</span>
+                            </div>
+                            <div class="event-datetime"><i class="fas fa-times-circle"></i> Feb 28, 2024 at 3:00 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- instructors -->
+    <div id="instructors" class="tab-content">
+        <div class="instructor-section">
+            <div class="section-header">
+                <h2 style="display: flex; gap:10px;"><i class="fas fa-chalkboard-teacher" style="color:var(--primary)"></i> Instructors & availability</h2>
+                <div class="slider-controls">
+                    <button class="slider-btn" onclick="scrollInstructors('left')"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-btn" onclick="scrollInstructors('right')"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="instructor-slider" id="instructorSlider">
+                <!-- Dr. Sarah Smith · CS · availability Mon/Wed/Fri 9-12 -->
+                <div class="instructor-card" data-instructor="1" data-availability="mon,wed,fri">
+                    <div class="instructor-avatar"><i class="fas fa-user-tie"></i></div>
+                    <h3>Dr. Sarah Smith</h3>
+                    <p class="department">Computer Science</p>
+                    <p class="specialization">AI & ML</p>
+                    <div class="availability-badge"><i class="far fa-clock"></i> Mon / Wed / Fri · 9am–12pm</div>
+                    <div><span class="day-pill">Mon</span><span class="day-pill">Wed</span><span class="day-pill">Fri</span></div>
+                    <div class="instructor-stats"><span><i class="fas fa-star" style="color:gold"></i> 4.9</span><span><i class="fas fa-users"></i> 22 sessions</span></div>
+                    <button class="select-btn" onclick="openInstructorModal(1)">View slots & book</button>
+                </div>
+                <!-- Prof. John Johnson · Math · Tue/Thu 1–4pm -->
+                <div class="instructor-card" data-instructor="2" data-availability="tue,thu">
+                    <div class="instructor-avatar"><i class="fas fa-user-tie"></i></div>
+                    <h3>Prof. John Johnson</h3>
+                    <p class="department">Mathematics</p>
+                    <p class="specialization">Calculus & Stats</p>
+                    <div class="availability-badge"><i class="far fa-clock"></i> Tue / Thu · 1pm–4pm</div>
+                    <div><span class="day-pill">Tue</span><span class="day-pill">Thu</span></div>
+                    <div class="instructor-stats"><span><i class="fas fa-star" style="color:gold"></i> 4.8</span><span><i class="fas fa-users"></i> 17 sessions</span></div>
+                    <button class="select-btn" onclick="openInstructorModal(2)">View slots & book</button>
+                </div>
+                <!-- Dr. Emily Chen · Physics · Mon/Wed 2–5pm -->
+                <div class="instructor-card" data-instructor="3" data-availability="mon,wed">
+                    <div class="instructor-avatar"><i class="fas fa-user-tie"></i></div>
+                    <h3>Dr. Emily Chen</h3>
+                    <p class="department">Physics</p>
+                    <p class="specialization">Quantum Mechanics</p>
+                    <div class="availability-badge"><i class="far fa-clock"></i> Mon / Wed · 2pm–5pm</div>
+                    <div><span class="day-pill">Mon</span><span class="day-pill">Wed</span></div>
+                    <div class="instructor-stats"><span><i class="fas fa-star" style="color:gold"></i> 5.0</span><span><i class="fas fa-users"></i> 31 sessions</span></div>
+                    <button class="select-btn" onclick="openInstructorModal(3)">View slots & book</button>
+                </div>
+                <!-- Prof. Michael Brown · Engineering · Wed/Fri 10–1pm -->
+                <div class="instructor-card" data-instructor="4" data-availability="wed,fri">
+                    <div class="instructor-avatar"><i class="fas fa-user-tie"></i></div>
+                    <h3>Prof. Michael Brown</h3>
+                    <p class="department">Engineering</p>
+                    <p class="specialization">Software Eng</p>
+                    <div class="availability-badge"><i class="far fa-clock"></i> Wed / Fri · 10am–1pm</div>
+                    <div><span class="day-pill">Wed</span><span class="day-pill">Fri</span></div>
+                    <div class="instructor-stats"><span><i class="fas fa-star" style="color:gold"></i> 4.7</span><span><i class="fas fa-users"></i> 14 sessions</span></div>
+                    <button class="select-btn" onclick="openInstructorModal(4)">View slots & book</button>
+                </div>
+                <!-- Dr. Lisa Williams · Psychology · Mon/Thu 11–2pm -->
+                <div class="instructor-card" data-instructor="5" data-availability="mon,thu">
+                    <div class="instructor-avatar"><i class="fas fa-user-tie"></i></div>
+                    <h3>Dr. Lisa Williams</h3>
+                    <p class="department">Psychology</p>
+                    <p class="specialization">Cognitive Psych</p>
+                    <div class="availability-badge"><i class="far fa-clock"></i> Mon / Thu · 11am–2pm</div>
+                    <div><span class="day-pill">Mon</span><span class="day-pill">Thu</span></div>
+                    <div class="instructor-stats"><span><i class="fas fa-star" style="color:gold"></i> 4.9</span><span><i class="fas fa-users"></i> 26 sessions</span></div>
+                    <button class="select-btn" onclick="openInstructorModal(5)">View slots & book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL (hidden by default) ===== -->
+    <div class="modal-overlay" id="instructorModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2><i class="fas fa-chalkboard-teacher"></i> <span id="modalInstructorName">Instructor</span></h2>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p id="modalAvailability" style="margin-bottom:1rem; color:var(--text-muted);">Loading availability...</p>
+                <div style="font-weight:600; margin-bottom:0.5rem;">Choose a time slot:</div>
+                <div class="slot-grid" id="modalSlotContainer">
+                    <!-- slots injected via js -->
+                </div>
+                <p style="font-size:0.8rem; margin-top:1rem;"><i class="fas fa-info-circle"></i> Click on a slot to select it, then confirm.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-confirm" id="confirmBookingBtn" onclick="confirmBooking()" disabled>Confirm booking</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- profile -->
+    <div id="profile" class="tab-content">
+        <div class="profile-section">
+            <div class="profile-header">
+                <div class="profile-avatar-large"><i class="fas fa-user-graduate"></i><div class="avatar-edit" onclick="editAvatar()"><i class="fas fa-camera"></i></div></div>
+                <div><h2>Alex Morgan</h2><p>alex.morgan@university.edu</p><span class="role-badge">Student</span></div>
+            </div>
+            <form class="profile-form" id="profileForm">
+                <div class="form-group"><label>First Name</label><input type="text" value="Alex"></div>
+                <div class="form-group"><label>Last Name</label><input type="text" value="Morgan"></div>
+                <div class="form-group"><label>Email</label><input type="email" value="alex.morgan@university.edu"></div>
+                <div class="form-group"><label>Phone</label><input type="tel" value="+1 (555) 987-6543"></div>
+                <div class="form-group"><label>Student ID</label><input type="text" value="STU-24CS089" readonly></div>
+                <div class="form-group"><label>Program</label><select><option>Computer Science</option><option>Mathematics</option></select></div>
+                <div class="full-width form-group"><label>Bio</label><textarea>AI enthusiast, junior researcher.</textarea></div>
+                <div class="form-group"><label>Current password</label><input type="password" placeholder="••••••••"></div>
+                <div class="form-group"><label>New password</label><input type="password" placeholder="New (optional)"></div>
+                <div class="form-actions full-width" style="display:flex; gap:1rem; justify-content:flex-end;">
+                    <button type="button" class="btn-secondary" onclick="resetProfileForm()">Cancel</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- history -->
+    <div id="history" class="tab-content">
+        <div class="history-layout">
+            <div class="history-list-section">
+                <h2 style="margin-bottom: 1rem;"><i class="fas fa-history" style="color:var(--primary)"></i> Consultation history with notes</h2>
+                <div class="history-filters">
+                    <button class="filter-btn active" onclick="filterHistory('all', event)">All</button>
+                    <button class="filter-btn" onclick="filterHistory('upcoming', event)">Upcoming</button>
+                    <button class="filter-btn" onclick="filterHistory('ongoing', event)">Ongoing</button>
+                    <button class="filter-btn" onclick="filterHistory('completed', event)">Completed</button>
+                    <button class="filter-btn" onclick="filterHistory('cancelled', event)">Cancelled</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <!-- Academic Advising - confirmed (upcoming) with a note already added -->
+                    <div class="history-item confirmed" data-status="confirmed" data-ongoing="false">
+                        <div class="history-main-row" onclick="toggleNote(this)">
+                            <div class="history-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="history-details">
+                                <h4>Academic Advising <span class="has-note-badge"><i class="fas fa-pencil-alt"></i> note</span></h4>
+                                <p>Dr. Sarah Smith · CS</p>
+                            </div>
+                            <div class="history-meta">
+                                <div class="history-date">Mar 15, 2024</div>
+                                <div class="history-time">10:00 AM</div>
+                                <span class="status-badge confirmed">Confirmed</span>
+                            </div>
+                        </div>
+                        <!-- note area visible by default for demo because it has note -->
+                        <div class="history-note-area" style="display: flex;">
+                            <div class="note-label"><i class="fas fa-sticky-note"></i> Note (preparation)</div>
+                            <div class="note-content">Bring updated transcript and questions about AI electives.</div>
+                            <div class="note-actions">
+                                <button class="note-btn" onclick="editNote(this, 'Academic Advising')"><i class="fas fa-edit"></i> Edit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Review - completed (normally no note area, but could be hidden) -->
+                    <div class="history-item completed" data-status="completed" data-ongoing="false">
+                        <div class="history-main-row" onclick="toggleNote(this)">
+                            <div class="history-icon"><i class="fas fa-check"></i></div>
+                            <div class="history-details"><h4>Project Review</h4><p>Prof. Michael Brown · Engineering</p></div>
+                            <div class="history-meta"><div class="history-date">Mar 10, 2024</div><div class="history-time">2:30 PM</div><span class="status-badge completed">Completed</span></div>
+                        </div>
+                        <!-- no note area for completed, but if note existed we could show, here we hide -->
+                    </div>
+
+                    <!-- Course Consultation - pending (ONGOING: can add notes) -->
+                    <div class="history-item pending" data-status="pending" data-ongoing="true">
+                        <div class="history-main-row" onclick="toggleNote(this)">
+                            <div class="history-icon"><i class="fas fa-clock"></i></div>
+                            <div class="history-details">
+                                <h4>Course Consultation <span class="ongoing-tag">ongoing</span></h4>
+                                <p>Prof. John Johnson · Math</p>
+                            </div>
+                            <div class="history-meta"><div class="history-date">Mar 18, 2024</div><div class="history-time">2:00 PM</div><span class="status-badge pending">Pending</span></div>
+                        </div>
+                        <!-- note area: initially hidden, but can be opened. Include an empty note + set button -->
+                        <div class="history-note-area" style="display: none;">
+                            <div class="note-label"><i class="fas fa-pen"></i> Consultation note</div>
+                            <div class="note-content empty" id="noteContent_123">No note yet. Click to add.</div>
+                            <div class="note-actions">
+                                <button class="note-btn" onclick="editNote(this, 'Course Consultation')"><i class="fas fa-plus-circle"></i> Set note</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Discussion - completed -->
+                    <div class="history-item completed" data-status="completed">
+                        <div class="history-main-row" onclick="toggleNote(this)">
+                            <div class="history-icon"><i class="fas fa-check"></i></div>
+                            <div class="history-details"><h4>Research Discussion</h4><p>Dr. Emily Chen · Physics</p></div>
+                            <div class="history-meta"><div class="history-date">Mar 5, 2024</div><div class="history-time">11:00 AM</div><span class="status-badge completed">Completed</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Career Counseling - cancelled (no ongoing note) -->
+                    <div class="history-item cancelled" data-status="cancelled">
+                        <div class="history-main-row" onclick="toggleNote(this)">
+                            <div class="history-icon"><i class="fas fa-times"></i></div>
+                            <div class="history-details"><h4>Career Counseling</h4><p>Dr. Lisa Williams · Psych</p></div>
+                            <div class="history-meta"><div class="history-date">Feb 28, 2024</div><div class="history-time">3:00 PM</div><span class="status-badge cancelled">Cancelled</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar-section">
+                <div style="display:flex; justify-content:space-between;"><h3>March 2024</h3><div><button class="btn-secondary" style="padding:0.3rem 1rem" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button><button class="btn-secondary" style="padding:0.3rem 1rem" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button></div></div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Su</div><div class="calendar-day-header">Mo</div><div class="calendar-day-header">Tu</div><div class="calendar-day-header">We</div><div class="calendar-day-header">Th</div><div class="calendar-day-header">Fr</div><div class="calendar-day-header">Sa</div>
+                    <div class="calendar-day other-month">25</div><div class="calendar-day other-month">26</div><div class="calendar-day other-month">27</div><div class="calendar-day other-month">28</div><div class="calendar-day other-month">29</div><div class="calendar-day">1</div><div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div><div class="calendar-day">4</div><div class="calendar-day has-event">5</div><div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div>
+                    <div class="calendar-day has-event">10</div><div class="calendar-day">11</div><div class="calendar-day">12</div><div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day has-event today">15</div><div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div><div class="calendar-day has-event">18</div><div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day">21</div><div class="calendar-day">22</div><div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div><div class="calendar-day">25</div><div class="calendar-day">26</div><div class="calendar-day">27</div><div class="calendar-day">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div><div class="calendar-day other-month">1</div><div class="calendar-day other-month">2</div><div class="calendar-day other-month">3</div><div class="calendar-day other-month">4</div><div class="calendar-day other-month">5</div><div class="calendar-day other-month">6</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div><div class="footer-brand">ConSlot</div><p style="color:var(--text-muted)">Smart consultation scheduling</p></div>
+        <div><h4>Quick</h4><ul class="footer-links"><li><a href="#" class="footer-link" onclick="switchTab('overview');return false">Dashboard</a></li><li><a href="#" class="footer-link" onclick="switchTab('instructors');return false">Instructors</a></li></ul></div>
+        <div><h4>Support</h4><div><i class="fas fa-envelope"></i> help@conslot.edu</div></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2025 ConSlot. Improved design.</p></div>
+</footer>
+
+<script>
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            if (btn.innerText.toLowerCase().includes(tabName) || (tabName === 'overview' && btn.innerText.includes('Overview'))) 
+                btn.classList.add('active');
+        });
+    }
+
+    function scrollInstructors(dir) {
+        const s = document.getElementById('instructorSlider');
+        s.scrollBy({ left: dir==='left' ? -320 : 320, behavior: 'smooth' });
+    }
+
+    // instructor data mapping with detailed availability (days & sample slots)
+    const instructorAvail = {
+        1: { name: 'Dr. Sarah Smith', dept: 'CS', days: 'Mon / Wed / Fri 9am-12pm', slots: ['Mon 9:30', 'Mon 10:30', 'Wed 9:00', 'Wed 11:00', 'Fri 10:00'] },
+        2: { name: 'Prof. John Johnson', dept: 'Math', days: 'Tue / Thu 1pm-4pm', slots: ['Tue 1:30', 'Tue 2:30', 'Thu 2:00', 'Thu 3:15'] },
+        3: { name: 'Dr. Emily Chen', dept: 'Physics', days: 'Mon / Wed 2pm-5pm', slots: ['Mon 2:15', 'Mon 3:15', 'Wed 2:30', 'Wed 4:00'] },
+        4: { name: 'Prof. Michael Brown', dept: 'Engineering', days: 'Wed / Fri 10am-1pm', slots: ['Wed 10:30', 'Wed 11:30', 'Fri 11:00'] },
+        5: { name: 'Dr. Lisa Williams', dept: 'Psychology', days: 'Mon / Thu 11am-2pm', slots: ['Mon 11:15', 'Mon 12:15', 'Thu 1:00', 'Thu 2:00'] }
+    };
+
+    let currentInstructorId = null;
+    let selectedSlot = null;   // store the selected slot text
+
+    // open modal and populate slots
+    window.openInstructorModal = function(id) {
+        currentInstructorId = id;
+        const inst = instructorAvail[id];
+        if (!inst) return;
+
+        // set header & availability
+        document.getElementById('modalInstructorName').innerText = inst.name;
+        document.getElementById('modalAvailability').innerHTML = `<i class="far fa-calendar-alt"></i> ${inst.days}`;
+
+        // generate slot buttons
+        const slotContainer = document.getElementById('modalSlotContainer');
+        slotContainer.innerHTML = '';
+        inst.slots.forEach(slot => {
+            const btn = document.createElement('div');
+            btn.className = 'slot-item';
+            btn.innerText = slot;
+            btn.setAttribute('data-slot', slot);
+            btn.onclick = (e) => {
+                // remove previous selected
+                document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('selected-slot'));
+                btn.classList.add('selected-slot');
+                selectedSlot = slot;
+                document.getElementById('confirmBookingBtn').disabled = false;
+            };
+            slotContainer.appendChild(btn);
+        });
+
+        // reset confirm button
+        document.getElementById('confirmBookingBtn').disabled = true;
+        selectedSlot = null;
+
+        // show modal
+        document.getElementById('instructorModal').classList.add('show');
+    }
+
+    window.closeModal = function() {
+        document.getElementById('instructorModal').classList.remove('show');
+        currentInstructorId = null;
+        selectedSlot = null;
+    }
+
+    window.confirmBooking = function() {
+        if (!currentInstructorId || !selectedSlot) {
+            alert('Please select a time slot first.');
+            return;
+        }
+        const inst = instructorAvail[currentInstructorId];
+        // demo booking – show success message
+        alert(`✅ Booking confirmed with ${inst.name} on ${selectedSlot}. A calendar invite will be sent.`);
+        closeModal();
+        // optional: update history (for demo we just close)
+    }
+    function editAvatar() { alert('Upload new photo'); }
+    function resetProfileForm() { document.getElementById('profileForm').reset(); }
+    document.getElementById('profileForm')?.addEventListener('submit', (e) => { e.preventDefault(); alert('Profile updated (demo)'); });
+
+    function filterHistory(filter, ev) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        ev.target.classList.add('active');
+        document.querySelectorAll('.history-item').forEach(it => {
+            if (filter === 'all') it.style.display = 'flex';
+            else if (filter === 'ongoing') {
+                // we consider "pending" as ongoing (can be custom attribute)
+                if (it.dataset.status === 'pending' || it.dataset.ongoing === 'true') it.style.display = 'flex';
+                else it.style.display = 'none';
+            } else if (filter === 'upcoming') {
+                it.style.display = it.classList.contains('confirmed') ? 'flex' : 'none';
+            } else {
+                it.style.display = it.classList.contains(filter) ? 'flex' : 'none';
+            }
+        });
+    }
+
+    // Toggle note area when clicking the main row (only if ongoing? we allow any but can condition)
+    window.toggleNote = function(element) {
+        const historyItem = element.closest('.history-item');
+        const noteArea = historyItem.querySelector('.history-note-area');
+        if (noteArea) {
+            if (noteArea.style.display === 'none' || getComputedStyle(noteArea).display === 'none') {
+                // only allow opening if ongoing OR if note not empty (for view) - we allow open always for demo
+                noteArea.style.display = 'flex';
+            } else {
+                noteArea.style.display = 'none';
+            }
+        }
+    };
+
+    // Edit / set note function
+    window.editNote = function(btn, title) {
+        const noteArea = btn.closest('.history-note-area');
+        const noteContentDiv = noteArea.querySelector('.note-content');
+        const currentText = noteContentDiv.innerText;
+        // if empty placeholder, start with empty prompt
+        let newNote = prompt(`Enter note for ${title}:`, currentText === 'No note yet. Click to add.' ? '' : currentText);
+        if (newNote !== null) {
+            if (newNote.trim() === '') {
+                noteContentDiv.innerText = 'No note yet. Click to add.';
+                noteContentDiv.classList.add('empty');
+            } else {
+                noteContentDiv.innerText = newNote;
+                noteContentDiv.classList.remove('empty');
+                // add a badge to main row if not present
+                const mainRow = noteArea.closest('.history-item').querySelector('.history-details h4');
+                if (!mainRow.querySelector('.has-note-badge')) {
+                    let badge = document.createElement('span');
+                    badge.className = 'has-note-badge';
+                    badge.innerHTML = '<i class="fas fa-pencil-alt"></i> note';
+                    mainRow.appendChild(badge);
+                }
+            }
+        }
+    };
+    function changeMonth(d) { 
+        let m = document.getElementById('calendarMonth');
+        if (m) m.innerText = 'April 2024'; 
+    }
+    document.querySelectorAll('.calendar-day').forEach(d => d.addEventListener('click', function() {
+        if (!this.classList.contains('other-month')) {
+            document.querySelectorAll('.calendar-day').forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+        }
+    }));
+    // on click outside modal? optional, but close on overlay click
+    document.querySelector('.modal-overlay').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    // initialize any note area for ongoing items: set first pending item note area hidden but editable
+    document.addEventListener('DOMContentLoaded', () => {
+        // set first note area for pending hidden
+        document.querySelectorAll('.history-item.pending .history-note-area').forEach(area => area.style.display = 'none');
+        // ensure badge appears on item with note
+    });
+</script>
+</body>
+</html>
+
