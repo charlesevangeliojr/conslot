@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConSlot</title>
+    <meta name="description" content="Book Smart. Consult Easy. Your gateway to seamless DCC consultation booking with expert instructors.">
+    <meta name="keywords" content="consultation, booking, DCC, education, appointments, scheduling">
+    <meta name="author" content="ConSlot Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="ConSlot - DCC Consultation Booking Portal">
+    <meta property="og:description" content="Book Smart. Consult Easy. Your gateway to seamless DCC consultation booking.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/conslot.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Additional landing page styles */
+        .hero {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease-out;
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            opacity: 1;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 500;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .hero-image {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            animation: fadeInRight 0.8s ease-out 0.6s both;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .conslot-logo {
+            width: 450px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .features {
+            padding: 100px 0;
+            background: #f8f9fa;
+            color: #333333;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            color: #333333;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+        
+        .stats {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 30px 20px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .btn-cta {
+            background: white;
+            color: #28a745;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            text-decoration: none;
+            color: #20c997;
+        }
+        
+        .btn-instructor-register {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 16px 38px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+        }
+        
+        .btn-instructor-register:hover {
+            background: white;
+            color: #2b6e3e;
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 16px 38px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            transform: translateY(-3px);
+        }
+        
+        /* Instructor CTA in Features Section */
+        .instructor-cta-features {
+            background: linear-gradient(135deg, #2b6e3e 0%, #4c9a6b 100%);
+            margin: 3rem 0 0;
+            padding: 3rem 2rem;
+            border-radius: var(--radius-xl);
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(43, 110, 62, 0.2);
+        }
+        
+        .instructor-cta-features .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .instructor-cta-features h3 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .instructor-cta-features p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .btn-instructor-features {
+            background: white;
+            color: #2b6e3e;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-instructor-features:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+            text-decoration: none;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-signin-features {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-signin-features:hover {
+            background: white;
+            color: #2b6e3e;
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+        }
+        
+        .modal-body {
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .modal-body p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .modal-actions .btn {
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 180px;
+            justify-content: center;
+        }
+        
+        .modal-actions .btn-primary {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+        }
+        
+        .modal-actions .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(40, 167, 69, 0.4);
+        }
+        
+        .modal-actions .btn-secondary {
+            background: white;
+            color: #28a745;
+            border: 2px solid #28a745;
+        }
+        
+        .modal-actions .btn-secondary:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Modal Form Styles */
+        .modal-large {
+            max-width: 600px;
+            width: 95%;
+        }
+        
+        .modal-body {
+            padding: 40px 30px;
+            text-align: left;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+        
+        .form-label i {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+            color: #1f2937;
+            font-weight: 500;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #28a745;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .form-control::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+        
+        .password-input-group {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .password-toggle:hover {
+            color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+        
+        .password-strength {
+            margin-top: 8px;
+            display: none;
+        }
+        
+        .strength-bar {
+            height: 3px;
+            border-radius: 2px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+            background: #e5e7eb;
+        }
+        
+        .strength-text {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+        
+        .strength-weak .strength-bar {
+            background: #ef4444;
+            width: 20%;
+        }
+        
+        .strength-fair .strength-bar {
+            background: #f59e0b;
+            width: 40%;
+        }
+        
+        .strength-good .strength-bar {
+            background: #eab308;
+            width: 60%;
+        }
+        
+        .strength-strong .strength-bar {
+            background: #10b981;
+            width: 80%;
+        }
+        
+        .strength-very-strong .strength-bar {
+            background: #06b6d4;
+            width: 100%;
+        }
+        
+        .form-options {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #4b5563;
+            cursor: pointer;
+            line-height: 1.4;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+            accent-color: #28a745;
+            cursor: pointer;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-label a {
+            color: #28a745;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+        
+        .forgot-password {
+            color: #28a745;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn-full {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-full.btn-primary {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-full.btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(40, 167, 69, 0.4);
+        }
+        
+        .btn-full.btn-secondary {
+            background: white;
+            color: #28a745;
+            border: 2px solid #28a745;
+        }
+        
+        .btn-full.btn-secondary:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-google {
+            width: 100%;
+            padding: 1.125rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-google:hover {
+            background: #f8fafc;
+            border-color: #28a745;
+            color: #1f2937;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.15);
+        }
+        
+        .btn-google i {
+            color: #4285f4;
+            font-size: 1.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .modal-large {
+                max-width: 95%;
+                margin: 5% auto;
+            }
+            
+            .modal-body {
+                padding: 30px 20px;
+            }
+        }
+        
+        .modal-actions .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-actions .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-actions {
+                justify-content: center;
+            }
+            
+            .hero-image i {
+                font-size: 8rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Book Smart.<br>Consult Easy.</h1>
+                <p>ConSlot is your gateway to seamless consultation booking with DCC instructors. Schedule appointments, manage your time, and get the academic support you need.</p>
+                <div class="hero-actions">
+                    <button onclick="showRegistrationModal()" class="btn-cta">Consult Now</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/conslot-w-word-lg.png" alt="ConSlot Logo" class="conslot-logo">
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Welcome to ConSlot!</h3>
+                <button class="close-btn" onclick="closeRegistrationModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Initial choice screen -->
+                <div id="choiceScreen">
+                    <p>Do you already have an account with ConSlot?</p>
+                    <div class="modal-actions">
+                        <button onclick="showLoginScreen()" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Yes, I have an account
+                        </button>
+                        <button onclick="showRegisterScreen()" class="btn btn-secondary">
+                            <i class="fas fa-user-plus"></i>
+                            No, I need to register
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Registration form screen (hidden by default) -->
+                <div id="registerScreen" style="display: none;">
+                    <form id="registerModalForm" method="POST" action="auth/register.php">
+                        <input type="hidden" name="csrf_token" value="">
+                        <input type="hidden" name="role" value="student">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">
+                                    <i class="fas fa-user"></i>
+                                    First Name
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="firstName" 
+                                    name="first_name" 
+                                    class="form-control" 
+                                    placeholder="Enter your first name"
+                                    required
+                                    autocomplete="given-name"
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="middleName" class="form-label">
+                                    <i class="fas fa-user"></i>
+                                    Middle Name
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="middleName" 
+                                    name="middle_name" 
+                                    class="form-control" 
+                                    placeholder="Enter your middle name (optional)"
+                                    autocomplete="additional-name"
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">
+                                    <i class="fas fa-user"></i>
+                                    Last Name
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="lastName" 
+                                    name="last_name" 
+                                    class="form-control" 
+                                    placeholder="Enter your last name"
+                                    required
+                                    autocomplete="family-name"
+                                >
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope"></i>
+                                Email Address
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-control" 
+                                placeholder="Enter your email"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Password
+                            </label>
+                            <div class="password-input-group">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-control" 
+                                    placeholder="Create a password"
+                                    required
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                >
+                                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Confirm Password
+                            </label>
+                            <div class="password-input-group">
+                                <input 
+                                    type="password" 
+                                    id="confirm_password" 
+                                    name="confirm_password" 
+                                    class="form-control" 
+                                    placeholder="Confirm your password"
+                                    required
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                >
+                                <button type="button" class="password-toggle" onclick="togglePassword('confirm_password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="terms" required>
+                                <span class="checkmark"></span>
+                                I agree to <a href="#" onclick="showTerms(); return false;">Terms of Service</a> and <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                                <i class="fas fa-user-plus"></i>
+                                Create Account
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-full" onclick="showChoiceScreen()">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="auth-divider" id="registerDivider" style="display: none;">
+                    <span>OR</span>
+                </div>
+                
+                <div class="google-signin" id="registerGoogle" style="display: none;">
+                    <a href="auth/google_oauth.php?action=register" class="btn btn-google btn-full">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Sign In to ConSlot</h3>
+                <button class="close-btn" onclick="closeLoginModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginModalForm" method="POST" action="auth/login.php">
+                    <input type="hidden" name="csrf_token" value="">
+                    <input type="hidden" name="user_type" value="student">
+                    
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="loginEmail" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="Enter your email"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="password-input-group">
+                            <input 
+                                type="password" 
+                                id="loginPassword" 
+                                name="password" 
+                                class="form-control" 
+                                placeholder="Enter your password"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="remember" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Remember me for 30 days
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Sign In
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-full" onclick="switchToRegister()">
+                            <i class="fas fa-user-plus"></i>
+                            Need an account? Register
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <div class="google-signin">
+                    <a href="auth/google_oauth.php?action=login" class="btn btn-google btn-full">
+                        <i class="fab fa-google"></i>
+                        Sign in with Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructor Login Modal -->
+    <div id="instructorLoginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Sign In to ConSlot</h3>
+                <button class="close-btn" onclick="closeInstructorLoginModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="instructorLoginForm" method="POST" action="auth/login.php">
+                    <input type="hidden" name="csrf_token" value="">
+                    <input type="hidden" name="user_type" value="instructor">
+                    
+                    <div class="form-group">
+                        <label for="instructorLoginEmail" class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="instructorLoginEmail" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="Enter your email"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instructorLoginPassword" class="form-label">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="password-input-group">
+                            <input 
+                                type="password" 
+                                id="instructorLoginPassword" 
+                                name="password" 
+                                class="form-control" 
+                                placeholder="Enter your password"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('instructorLoginPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="remember" id="instructorRememberMe">
+                            <span class="checkmark"></span>
+                            Remember me for 30 days
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Sign In
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-full" onclick="showInstructorRegisterModal()">
+                            <i class="fas fa-user-plus"></i>
+                            Need an account? Register
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <div class="google-signin">
+                    <a href="auth/google_oauth.php?action=login&user_type=instructor" class="btn btn-google btn-full">
+                        <i class="fab fa-google"></i>
+                        Sign in with Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructor Registration Modal -->
+    <div id="instructorRegisterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Your ConSlot Account</h3>
+                <button class="close-btn" onclick="closeInstructorRegisterModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="instructorRegisterModalForm" method="POST" action="auth/register.php">
+                    <input type="hidden" name="csrf_token" value="">
+                    <input type="hidden" name="role" value="instructor">
+                    <input type="hidden" name="user_type" value="instructor">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="instructorFirstName" class="form-label">
+                                <i class="fas fa-user"></i>
+                                First Name
+                            </label>
+                            <input 
+                                type="text" 
+                                id="instructorFirstName" 
+                                name="first_name" 
+                                class="form-control" 
+                                placeholder="Enter your first name"
+                                required
+                                autocomplete="given-name"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="instructorMiddleName" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Middle Name
+                            </label>
+                            <input 
+                                type="text" 
+                                id="instructorMiddleName" 
+                                name="middle_name" 
+                                class="form-control" 
+                                placeholder="Enter your middle name (optional)"
+                                autocomplete="additional-name"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="instructorLastName" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Last Name
+                            </label>
+                            <input 
+                                type="text" 
+                                id="instructorLastName" 
+                                name="last_name" 
+                                class="form-control" 
+                                placeholder="Enter your last name"
+                                required
+                                autocomplete="family-name"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instructorEmail" class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="instructorEmail" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="Enter your email"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instructorPassword" class="form-label">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="password-input-group">
+                            <input 
+                                type="password" 
+                                id="instructorPassword" 
+                                name="password" 
+                                class="form-control" 
+                                placeholder="Create a password"
+                                required
+                                autocomplete="new-password"
+                                minlength="6"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('instructorPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength" id="instructorPasswordStrength"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instructorConfirmPassword" class="form-label">
+                            <i class="fas fa-lock"></i>
+                            Confirm Password
+                        </label>
+                        <div class="password-input-group">
+                            <input 
+                                type="password" 
+                                id="instructorConfirmPassword" 
+                                name="confirm_password" 
+                                class="form-control" 
+                                placeholder="Confirm your password"
+                                required
+                                autocomplete="new-password"
+                                minlength="6"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('instructorConfirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to <a href="#" onclick="showTerms(); return false;">Terms of Service</a> and <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full" id="instructorSubmitBtn">
+                            <i class="fas fa-user-plus"></i>
+                            Create Account
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-full" onclick="closeInstructorRegisterModal()">
+                            <i class="fas fa-arrow-left"></i>
+                            Back
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <div class="google-signin">
+                    <a href="auth/google_oauth.php?action=register&user_type=instructor" class="btn btn-google btn-full">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose ConSlot?</h2>
+                <p>Streamlined consultation management for students and instructors</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Intelligent time slot management ensures fair distribution and optimal use of consultation time.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Role-Based Access</h3>
+                    <p>Secure authentication system with different access levels for instructors and students.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Real-Time Updates</h3>
+                    <p>Live availability updates and instant notifications for booking confirmations.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Responsive design works seamlessly on desktop, tablet, and mobile devices.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Comprehensive insights and statistics for instructors to track consultation trends.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Booking History</h3>
+                    <p>Complete record of all past and upcoming consultations for easy reference.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instructor CTA -->
+        <div class="instructor-cta-features">
+            <div class="cta-content">
+                <h3>Ready to Share Your Expertise?</h3>
+                <p>Join our community of instructors and help students achieve their academic goals</p>
+                <div class="cta-buttons">
+                    <a href="#" onclick="showInstructorRegisterModal()" class="btn-instructor-features">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Register as Instructor
+                    </a>
+                    <a href="#" onclick="showInstructorLoginModal()" class="btn-signin-features">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Signin as Instructor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <i class="fas fa-users"></i>
+                        <span class="counter" data-target="100">0</span>+
+                    </div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <i class="fas fa-calendar-check"></i>
+                        <span class="counter" data-target="500">0</span>+
+                    </div>
+                    <div class="stat-label">Bookings Made</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span class="counter" data-target="10">0</span>+
+                    </div>
+                    <div class="stat-label">Expert Instructors</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <i class="fas fa-star"></i>
+                        <span class="counter" data-target="98">0</span>%
+                    </div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Get Started?</h2>
+            <p>Join hundreds of students who are already benefiting from streamlined consultation booking</p>
+            <div class="cta-actions">
+                <a href="register.html" class="btn-cta">Create Your Consult Account</a>
+                <a href="auth/login.php" class="btn-secondary">Sign In</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>ConSlot</span>
+                    </div>
+                    <p class="footer-description">
+                        Your trusted DCC consultation booking portal. Smart scheduling for academic success.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="auth/login.php">Login</a></li>
+                        <li><a href="register.html">Consult Now</a></li>
+                        <li><a href="README.md">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>support@conslot.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>DCC Campus, Building A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2024 ConSlot. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    
+    <script>
+        // Animated counter for statistics
+        function animateCounter() {
+            const counters = document.querySelectorAll('.counter');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+        
+        // Check if element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+        
+        // Start counter animation when stats section is visible
+        function handleScroll() {
+            const statsSection = document.querySelector('.stats');
+            if (statsSection && isInViewport(statsSection)) {
+                animateCounter();
+                window.removeEventListener('scroll', handleScroll);
+            }
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                // Skip empty anchors and anchors with onclick handlers
+                if (href === '#' || this.onclick) {
+                    return;
+                }
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Initialize
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+        
+        // Modal Functions
+        function showRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            // Show choice screen by default
+            showChoiceScreen();
+        }
+        
+        function closeRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showChoiceScreen() {
+            document.getElementById('choiceScreen').style.display = 'block';
+            document.getElementById('registerScreen').style.display = 'none';
+            document.getElementById('registerDivider').style.display = 'none';
+            document.getElementById('registerGoogle').style.display = 'none';
+            document.querySelector('.modal-header h3').textContent = 'Welcome to ConSlot!';
+        }
+        
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        function closeInstructorLoginModal() {
+            const modal = document.getElementById('instructorLoginModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        function closeInstructorRegisterModal() {
+            const modal = document.getElementById('instructorRegisterModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        function switchToRegister() {
+            closeLoginModal();
+            showRegistrationModal();
+            showRegisterScreen();
+        }
+        
+        function goToLogin() {
+            window.location.href = 'auth/login.php';
+        }
+        
+        function goToRegister() {
+            showRegistrationModal();
+        }
+        
+        // Generate CSRF token for registration
+        function generateCSRFToken() {
+            const tokenInputs = document.querySelectorAll('input[name="csrf_token"]');
+            tokenInputs.forEach(input => {
+                // Generate a random token
+                const token = Math.random().toString(36).substring(2, 15) + 
+                             Math.random().toString(36).substring(2, 15) +
+                             Math.random().toString(36).substring(2, 15);
+                input.value = token;
+                
+                // Also store in session storage for validation
+                sessionStorage.setItem('csrf_token', token);
+            });
+        }
+
+        // Generate CSRF token for login
+        function generateLoginCSRFToken() {
+            const tokenInput = document.querySelector('#loginModalForm input[name="csrf_token"]');
+            if (tokenInput) {
+                const token = Math.random().toString(36).substring(2, 15) + 
+                             Math.random().toString(36).substring(2, 15) +
+                             Math.random().toString(36).substring(2, 15);
+                tokenInput.value = token;
+                sessionStorage.setItem('login_csrf_token', token);
+            }
+        }
+
+        // Generate CSRF token for instructor registration
+        function generateInstructorCSRFToken() {
+            const tokenInput = document.querySelector('#instructorRegisterModalForm input[name="csrf_token"]');
+            if (tokenInput) {
+                const token = Math.random().toString(36).substring(2, 15) + 
+                             Math.random().toString(36).substring(2, 15) +
+                             Math.random().toString(36).substring(2, 15);
+                tokenInput.value = token;
+                sessionStorage.setItem('instructor_csrf_token', token);
+            }
+        }
+
+        // Generate CSRF token for instructor login
+        function generateInstructorLoginCSRFToken() {
+            const tokenInput = document.querySelector('#instructorLoginForm input[name="csrf_token"]');
+            if (tokenInput) {
+                const token = Math.random().toString(36).substring(2, 15) + 
+                             Math.random().toString(36).substring(2, 15) +
+                             Math.random().toString(36).substring(2, 15);
+                tokenInput.value = token;
+                sessionStorage.setItem('instructor_login_csrf_token', token);
+            }
+        }
+
+        // Update modal functions to generate tokens
+        function showRegisterScreen() {
+            document.getElementById('choiceScreen').style.display = 'none';
+            document.getElementById('registerScreen').style.display = 'block';
+            document.getElementById('registerDivider').style.display = 'flex';
+            document.getElementById('registerGoogle').style.display = 'block';
+            document.querySelector('.modal-header h3').textContent = 'Create Your ConSlot Account';
+            generateCSRFToken();
+        }
+
+        function showLoginScreen() {
+            closeRegistrationModal();
+            showLoginModal();
+        }
+
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            generateLoginCSRFToken();
+            loadRememberedEmail();
+        }
+
+        function showInstructorRegisterModal() {
+            const modal = document.getElementById('instructorRegisterModal');
+            if (modal) {
+                modal.classList.add('show');
+                // Don't set body overflow to hidden, it causes the opacity issue
+                // document.body.style.overflow = 'hidden';
+                // Ensure modal content is visible
+                const modalContent = modal.querySelector('.modal-content');
+                if (modalContent) {
+                    modalContent.style.display = 'block';
+                }
+                generateInstructorCSRFToken();
+            }
+        }
+
+        function showInstructorLoginModal() {
+            const modal = document.getElementById('instructorLoginModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                generateInstructorLoginCSRFToken();
+            }
+        }
+        function loadRememberedEmail() {
+            const rememberedEmail = getCookie('remember_email');
+            if (rememberedEmail) {
+                document.getElementById('loginEmail').value = rememberedEmail;
+                document.getElementById('rememberMe').checked = true;
+            }
+        }
+        
+        // Get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        
+        // Password functions
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const toggle = input.nextElementSibling.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggle.classList.remove('fa-eye');
+                toggle.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                toggle.classList.remove('fa-eye-slash');
+                toggle.classList.add('fa-eye');
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password, formType = 'student') {
+            const strengthDivId = formType === 'instructor' ? 'instructorPasswordStrength' : 'passwordStrength';
+            const strengthDiv = document.getElementById(strengthDivId);
+            let strength = 0;
+            
+            if (password.length >= 6) strength++;
+            if (password.length >= 10) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            const strengthLevels = [
+                { class: 'weak', text: 'Weak password', color: '#ef4444' },
+                { class: 'fair', text: 'Fair password', color: '#f59e0b' },
+                { class: 'good', text: 'Good password', color: '#eab308' },
+                { class: 'strong', text: 'Strong password', color: '#10b981' },
+                { class: 'very-strong', text: 'Very strong password', color: '#06b6d4' }
+            ];
+            
+            const level = strengthLevels[Math.min(strength - 1, strengthLevels.length - 1)];
+            
+            if (password.length > 0) {
+                strengthDiv.innerHTML = `<div class="strength-bar ${level.class}" style="width: ${(strength / 5) * 100}%; background-color: ${level.color};"></div>
+                                         <span class="strength-text" style="color: ${level.color};">${level.text}</span>`;
+                strengthDiv.style.display = 'block';
+            } else {
+                strengthDiv.style.display = 'none';
+            }
+        }
+
+        // Password confirmation checker for instructor
+        function checkPasswordMatch(formType = 'student') {
+            const passwordId = formType === 'instructor' ? 'instructorPassword' : 'password';
+            const confirmId = formType === 'instructor' ? 'instructorConfirmPassword' : 'confirm_password';
+            
+            const password = document.getElementById(passwordId).value;
+            const confirmPassword = document.getElementById(confirmId).value;
+            const confirmInput = document.getElementById(confirmId);
+            
+            if (confirmPassword.length > 0) {
+                if (password === confirmPassword) {
+                    confirmInput.classList.remove('error');
+                    confirmInput.classList.add('success');
+                } else {
+                    confirmInput.classList.remove('success');
+                    confirmInput.classList.add('error');
+                }
+            } else {
+                confirmInput.classList.remove('error', 'success');
+            }
+        }
+
+        // Form validation for student
+        function validateForm() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const terms = document.querySelector('input[name="terms"]').checked;
+            const submitBtn = document.getElementById('submitBtn');
+            
+            let isValid = true;
+            
+            // Validate first name
+            if (firstName.length < 2) {
+                isValid = false;
+            }
+            
+            // Validate last name
+            if (lastName.length < 2) {
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                isValid = false;
+            }
+            
+            // Validate password
+            if (password.length < 6) {
+                isValid = false;
+            }
+            
+            // Validate password match
+            if (password !== confirmPassword) {
+                isValid = false;
+            }
+            
+            // Validate terms
+            if (!terms) {
+                isValid = false;
+            }
+            
+            submitBtn.disabled = !isValid;
+        }
+
+        // Form validation for instructor
+        function validateInstructorForm() {
+            const firstName = document.getElementById('instructorFirstName').value.trim();
+            const lastName = document.getElementById('instructorLastName').value.trim();
+            const email = document.getElementById('instructorEmail').value.trim();
+            const password = document.getElementById('instructorPassword').value;
+            const confirmPassword = document.getElementById('instructorConfirmPassword').value;
+            const terms = document.querySelector('#instructorRegisterModalForm input[name="terms"]').checked;
+            const submitBtn = document.getElementById('instructorSubmitBtn');
+            
+            let isValid = true;
+            
+            // Validate first name
+            if (firstName.length < 2) {
+                isValid = false;
+            }
+            
+            // Validate last name
+            if (lastName.length < 2) {
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                isValid = false;
+            }
+            
+            // Validate password
+            if (password.length < 6) {
+                isValid = false;
+            }
+            
+            // Validate password match
+            if (password !== confirmPassword) {
+                isValid = false;
+            }
+            
+            // Validate terms
+            if (!terms) {
+                isValid = false;
+            }
+            
+            submitBtn.disabled = !isValid;
+        }
+
+        // Generate CSRF token (simplified version)
+        function generateCSRFToken() {
+            const tokenInput = document.querySelector('input[name="csrf_token"]');
+            if (tokenInput) {
+                // Generate a simple token (in production, use a more secure method)
+                tokenInput.value = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            }
+        }
+
+        function showTerms() {
+            alert('Terms of Service:\n\n1. Use platform for legitimate consultation purposes\n2. Respect instructors\' time and schedules\n3. Provide accurate information\n4. Follow academic integrity guidelines\n5. Report any issues or concerns promptly');
+        }
+
+        function showPrivacy() {
+            alert('Privacy Policy:\n\n1. We collect only necessary information for booking purposes\n2. Your personal data is encrypted and secure\n3. We do not share your information with third parties\n4. You can request data deletion at any time\n5. We comply with data protection regulations');
+        }
+
+        // Initialize form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Student registration form
+            const form = document.getElementById('registerModalForm');
+            if (form) {
+                const passwordField = document.getElementById('password');
+                const confirmPasswordField = document.getElementById('confirm_password');
+                
+                passwordField.addEventListener('input', function() {
+                    checkPasswordStrength(this.value);
+                    checkPasswordMatch();
+                    validateForm();
+                });
+                
+                confirmPasswordField.addEventListener('input', function() {
+                    checkPasswordMatch();
+                    validateForm();
+                });
+                
+                // Validate all fields on input
+                form.addEventListener('input', validateForm);
+                form.addEventListener('change', validateForm);
+                
+                // Handle form submission
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = document.getElementById('submitBtn');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+                    
+                    // Create form data
+                    const formData = new FormData(form);
+                    
+                    // Submit via AJAX
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Show success notification
+                            showNotification(data.message, 'success');
+                            
+                            // Close registration modal
+                            closeRegistrationModal();
+                            
+                            // Show login modal after a short delay
+                            setTimeout(() => {
+                                showLoginModal();
+                                // Pre-fill email in login form
+                                const loginEmail = document.getElementById('loginEmail');
+                                if (loginEmail) {
+                                    loginEmail.value = formData.get('email');
+                                }
+                            }, 1000);
+                        } else {
+                            // Show error notification
+                            showNotification(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Registration failed. Please try again.', 'error');
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    });
+                });
+                
+                // Initial validation
+                validateForm();
+            }
+
+            // Instructor registration form
+            const instructorForm = document.getElementById('instructorRegisterModalForm');
+            if (instructorForm) {
+                const passwordField = document.getElementById('instructorPassword');
+                const confirmPasswordField = document.getElementById('instructorConfirmPassword');
+                
+                passwordField.addEventListener('input', function() {
+                    checkPasswordStrength(this.value, 'instructor');
+                    checkPasswordMatch('instructor');
+                    validateInstructorForm();
+                });
+                
+                confirmPasswordField.addEventListener('input', function() {
+                    checkPasswordMatch('instructor');
+                    validateInstructorForm();
+                });
+                
+                // Validate all fields on input
+                instructorForm.addEventListener('input', validateInstructorForm);
+                instructorForm.addEventListener('change', validateInstructorForm);
+                
+                // Handle form submission
+                instructorForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = document.getElementById('instructorSubmitBtn');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+                    
+                    // Create form data
+                    const formData = new FormData(instructorForm);
+                    
+                    // Submit via AJAX
+                    fetch(instructorForm.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Show success notification
+                            showNotification(data.message, 'success');
+                            
+                            // Close registration modal
+                            closeInstructorRegisterModal();
+                            
+                            // Show instructor login modal after a short delay
+                            setTimeout(() => {
+                                showInstructorLoginModal();
+                                // Pre-fill email in instructor login form
+                                const instructorLoginEmail = document.getElementById('instructorLoginEmail');
+                                if (instructorLoginEmail) {
+                                    instructorLoginEmail.value = formData.get('email');
+                                }
+                            }, 1000);
+                        } else {
+                            // Show error notification
+                            showNotification(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Registration failed. Please try again.', 'error');
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    });
+                });
+                
+                // Initial validation
+                validateInstructorForm();
+            }
+
+            // Student login form
+            const loginForm = document.getElementById('loginModalForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = loginForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+                    
+                    // Create form data
+                    const formData = new FormData(loginForm);
+                    
+                    // Submit via AJAX
+                    fetch(loginForm.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Show success notification
+                            showNotification(data.message, 'success');
+                            
+                            // Redirect to dashboard after a short delay
+                            setTimeout(() => {
+                                window.location.href = data.redirect;
+                            }, 1000);
+                        } else {
+                            // Show error notification
+                            showNotification(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Login failed. Please try again.', 'error');
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    });
+                });
+            }
+
+            // Instructor login form
+            const instructorLoginForm = document.getElementById('instructorLoginForm');
+            if (instructorLoginForm) {
+                instructorLoginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = instructorLoginForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+                    
+                    // Create form data
+                    const formData = new FormData(instructorLoginForm);
+                    
+                    // Submit via AJAX
+                    fetch(instructorLoginForm.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Show success notification
+                            showNotification(data.message, 'success');
+                            
+                            // Redirect to dashboard after a short delay
+                            setTimeout(() => {
+                                window.location.href = data.redirect;
+                            }, 1000);
+                        } else {
+                            // Show error notification
+                            showNotification(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Login failed. Please try again.', 'error');
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    });
+                });
+            }
+        });
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const regModal = document.getElementById('registrationModal');
+            const loginModal = document.getElementById('loginModal');
+            const instructorModal = document.getElementById('instructorRegisterModal');
+            const instructorLoginModal = document.getElementById('instructorLoginModal');
+            
+            if (event.target === regModal) {
+                closeRegistrationModal();
+            }
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+            if (event.target === instructorModal) {
+                closeInstructorRegisterModal();
+            }
+            if (event.target === instructorLoginModal) {
+                closeInstructorLoginModal();
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeRegistrationModal();
+                closeLoginModal();
+                closeInstructorRegisterModal();
+                closeInstructorLoginModal();
+            }
+        });
+        
+        // Show notification function
+        function showNotification(message, type = 'success') {
+            // Remove existing notifications
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span class="notification-message">${message}</span>
+                <span class="notification-close" onclick="this.parentElement.remove()">&times;</span>
+            `;
+            
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 9999;
+                max-width: 350px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                animation: slideInRight 0.3s ease-out;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            // Set background color based on type
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+            } else if (type === 'error') {
+                notification.style.background = 'linear-gradient(135deg, #dc3545, #c82333)';
+            } else if (type === 'warning') {
+                notification.style.background = 'linear-gradient(135deg, #ffc107, #e0a800)';
+                notification.style.color = '#333';
+            }
+            
+            // Add close button style
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.style.cssText = `
+                cursor: pointer;
+                font-size: 20px;
+                font-weight: bold;
+                margin-left: 10px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+        
+        // Check for URL parameters on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            const type = urlParams.get('type');
+            
+            if (message) {
+                showNotification(decodeURIComponent(message), type || 'success');
+                // Clear URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
