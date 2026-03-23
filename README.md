@@ -23,6 +23,7 @@ ConSlot is a modern, responsive web application that provides an intuitive platf
 - **Instructor Registration**: Separate registration pathway for instructors
 - **Login System**: Role-based authentication for students and instructors
 - **Password Security**: Hashed password storage and validation
+- **Profile Management**: User profile management and customization
 
 #### Database Architecture
 - **User Management**: Separate tables for students and instructors
@@ -84,16 +85,17 @@ ConSlot is a modern, responsive web application that provides an intuitive platf
 ```
 conslot/
 ├── auth/                  # Authentication pages
-│   ├── login.html
-│   ├── register_student.html
-│   └── register_instructor.html
+│   ├── login.php
+│   ├── register.php
+│   └── logout.php
+├── config/                # Configuration files
+│   └── config.php
 ├── css/                   # Stylesheets
 │   └── style.css
 ├── img/                   # Images and assets
 ├── js/                    # JavaScript files
 ├── student/               # Student-specific pages
 ├── instructor/            # Instructor-specific pages
-├── config/                # Configuration files
 ├── database.sql           # Database schema and data
 ├── index.html             # Main landing page
 └── README.md              # Project documentation
@@ -122,7 +124,7 @@ The system uses a comprehensive MySQL database with the following main tables:
 ### Setup Instructions
 1. Clone the repository: `git clone git@github.com:charlesevangeliojr/conslot.git`
 2. Import the database schema from `database.sql`
-3. Configure database connection in `config/`
+3. Configure database connection in `config/config.php`
 4. Set up web server to point to project root
 5. Access the application via your web browser
 

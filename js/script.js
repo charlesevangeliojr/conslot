@@ -4,8 +4,6 @@
 function showChoiceScreen() {
     document.getElementById('choiceScreen').style.display = 'block';
     document.getElementById('registerScreen').style.display = 'none';
-    document.getElementById('registerDivider').style.display = 'none';
-    document.getElementById('registerGoogle').style.display = 'none';
     document.querySelector('.modal-header h3').textContent = 'Welcome to ConSlot!';
 }
 

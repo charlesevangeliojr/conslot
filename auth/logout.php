@@ -38,6 +38,6 @@ if (isset($_COOKIE['remember_me'])) {
 }
 
 // Redirect to homepage
-header('Location: ../index.php');
+header('Location: ../index.html');
 exit;
 ?>

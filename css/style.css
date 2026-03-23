@@ -1090,65 +1090,6 @@ a:hover {
     font-weight: 500;
 }
 
-/* Google Sign-In Styles */
-.auth-divider {
-    display: flex;
-    align-items: center;
-    margin: var(--spacing-lg) 0;
-    gap: var(--spacing-md);
-}
-
-.auth-divider::before,
-.auth-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border-light);
-}
-
-.auth-divider span {
-    color: var(--text-secondary);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    padding: 0 var(--spacing-sm);
-}
-
-.google-signin {
-    margin-bottom: var(--spacing-lg);
-}
-
-.btn-google {
-    background: #ffffff;
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    transition: var(--transition);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.btn-google:hover {
-    background: var(--bg-secondary);
-    border-color: var(--border-dark);
-    color: var(--text-primary);
-    text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
-
-.btn-google i {
-    color: #4285f4;
-    font-size: var(--font-size-lg);
-}
-
-.btn-google.btn-full {
-    width: 100%;
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: var(--radius);
-}
 
 .auth-features {
     position: absolute;

@@ -150,7 +150,10 @@ try {
                     <h1>Welcome back, <?php echo htmlspecialchars($userName); ?>!</h1>
                     <p>Student Dashboard - Manage your consultations</p>
                 </div>
-                <div>
+                <div style="display: flex; gap: 10px;">
+                    <a href="book_consultation.php" class="btn" style="background: white; color: #28a745; font-weight: 600;">
+                        <i class="fas fa-calendar-plus"></i> Book Consultation
+                    </a>
                     <a href="../auth/logout.php" class="btn btn-secondary">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
